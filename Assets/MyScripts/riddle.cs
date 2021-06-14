@@ -6,14 +6,14 @@ public class riddle : MonoBehaviour
 {
     [SerializeField] private Gate _gate;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //if (Input.GetKeyDown(KeyCode.E))
-            //{
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 _gate.Open();
-            //}
+            }
         }
     }
 
