@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class TakeAmmo : MonoBehaviour
+public class EndLevel : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(gameObject);
-            other.GetComponent<HeroMove>().AdMine();
+            SceneManager.LoadScene("ss");
         }
     }
 }

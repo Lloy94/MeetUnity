@@ -9,6 +9,7 @@ public class TakeHp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
+            other.GetComponent<HeroMove>().AdHP(50);
         }
     }
 }
