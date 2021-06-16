@@ -21,6 +21,8 @@ public class HeroMove : MonoBehaviour
     private void Awake()
     {
         _hp = _maxHP;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     private void Update()
     {
@@ -61,7 +63,7 @@ public class HeroMove : MonoBehaviour
     {
         
        
-            var bullet = Instantiate(_bulletPref, _bulletStartPosition.position, Quaternion.identity);
+            var bullet = Instantiate(_bulletPref, _bulletStartPosition.position, transform.rotation);
             var b = bullet.GetComponent<Bullet>();
             b.Init();
         
