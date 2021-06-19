@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private GameObject _EnemyBulletPref;
+    [SerializeField] private Transform _bulletStartPosition;
     [SerializeField] private int _maxHP;
     [SerializeField] private Transform []_targets;
 
@@ -21,7 +23,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (_agent.remainingDistance < _agent.stoppingDistance)
+        if (_agent.remainingDistance < _agent.stoppingDistance&&_agent.isStopped==false)
         {
             m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % _targets.Length;
             _agent.SetDestination(_targets[m_CurrentWaypointIndex].position);
@@ -41,6 +43,21 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    public void Fire()
+    {
+        _agent.isStopped = true;
+        gameObject.transform.LookAt(GameObject.FindWithTag("Player").transform.position);
+        var bullet = Instantiate(_EnemyBulletPref, _bulletStartPosition.position, transform.rotation);
+        var b = bullet.GetComponent<EnemyBullet>();
+        b.Init();
 
+
+
+    }
+
+    public void ReturnPatrol()
+    {
+        _agent.isStopped = false;
+    }
 
 }
