@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
-    [SerializeField] private float _speed = 10;
+    // Start is called before the first frame update
+    [SerializeField] private float _speed = 5;
     [SerializeField] private float _maxLifeTime = 10;
     [SerializeField] private int _damage = 10;
+
+  
 
     public void Init()
     {
@@ -20,11 +23,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) return;
+        if (other.CompareTag("Enemy")) return;
         if (other.CompareTag("FireZone")) return;
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Player"))
+
         {
-            other.GetComponent<Enemy>().TakeDamage(_damage);
+            other.GetComponent<HeroMove>().TakeDamage(_damage);
         }
         Destroy(gameObject);
     }

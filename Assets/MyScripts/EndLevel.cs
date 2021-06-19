@@ -9,7 +9,7 @@ public class EndLevel : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene("ss");
+            SceneManager.LoadScene("Level 2");
         }
     }
 }
