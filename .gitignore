@@ -5,6 +5,8 @@
 [Bb]uilds/
 [Ll]ogs/
 
+!/[Aa]ssets/**/*.meta
+
 
 # Visual Studio cache directory
 .vs/

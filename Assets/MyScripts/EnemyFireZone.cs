@@ -9,13 +9,15 @@ public class EnemyFireZone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        _enemy.InvokeRepeating("Fire", 1f, _fireSpeed);
+        _enemy?.InvokeRepeating("Fire", 1f, _fireSpeed);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
-            _enemy.CancelInvoke();
-        _enemy.Invoke("ReturnPatrol", 1);
+        {
+            _enemy?.CancelInvoke();
+            _enemy?.Invoke("ReturnPatrol", 1);
+        }
     }
 }
