@@ -636,7 +636,6 @@ GameObject:
   m_Component:
   - component: {fileID: 517122806970099072}
   - component: {fileID: 47157017134432460}
-  - component: {fileID: 893648826140000059}
   - component: {fileID: 893648826140000056}
   - component: {fileID: 893648826140000057}
   m_Layer: 0
@@ -693,25 +692,8 @@ MonoBehaviour:
   sensitivity: 40
   _maxHP: 200
   _mineCount: 3
---- !u!95 &893648826140000059
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893648826140000058}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 88ba486d780efc948a81f5bd24144a08, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  jumpForce: 2
+  _animator: {fileID: 0}
 --- !u!54 &893648826140000056
 Rigidbody:
   m_ObjectHideFlags: 0

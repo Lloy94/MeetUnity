@@ -9,9 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _bulletStartPosition;
     [SerializeField] private int _maxHP;
     [SerializeField] private Transform []_targets;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private Boss _boss;
 
     private NavMeshAgent _agent;
     private int _hp;
+
+    private bool _death = false;
 
     private int m_CurrentWaypointIndex;
     private void Awake()
@@ -19,6 +23,7 @@ public class Enemy : MonoBehaviour
         _hp = _maxHP;
         _agent = GetComponent<NavMeshAgent>();
         _agent.SetDestination(_targets[0].position);
+        _animator.SetBool("Walk", true);
     }
 
     private void Update()
@@ -27,7 +32,11 @@ public class Enemy : MonoBehaviour
         {
             m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % _targets.Length;
             _agent.SetDestination(_targets[m_CurrentWaypointIndex].position);
+            
         }
+
+            
+    
     }
 
     public void TakeDamage(int damage) 
@@ -41,16 +50,25 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
-        Destroy(gameObject);
+        if (_boss != null)
+        {
+            _death = true;
+            _boss.DeathAnimation();
+            Destroy(gameObject, 4);
+        }
+        else Destroy(gameObject);
     }
     public void Fire()
     {
-        _agent.isStopped = true;
-        gameObject.transform.LookAt(GameObject.FindWithTag("Player").transform.position);
-        var bullet = Instantiate(_EnemyBulletPref, _bulletStartPosition.position, transform.rotation);
-        var b = bullet.GetComponent<EnemyBullet>();
-        b.Init();
-
+        if (!_death)
+        {
+            _agent.isStopped = true;
+            gameObject.transform.LookAt(GameObject.FindWithTag("Player").transform.position);
+            var bullet = Instantiate(_EnemyBulletPref, _bulletStartPosition.position, transform.rotation);
+            var b = bullet.GetComponent<EnemyBullet>();
+            b.Init();
+            _animator.SetBool("Walk", false);
+        }
 
 
     }
@@ -58,6 +76,7 @@ public class Enemy : MonoBehaviour
     public void ReturnPatrol()
     {
         _agent.isStopped = false;
+        _animator.SetBool("Walk", true);
     }
 
 }
