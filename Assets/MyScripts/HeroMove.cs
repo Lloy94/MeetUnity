@@ -13,16 +13,22 @@ public class HeroMove : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private int sensitivity;
     private Vector3 _dir;
-    [SerializeField] private int _maxHP=200;
-    [SerializeField] private int _mineCount=3;
+    [SerializeField] private int _maxHP = 200;
+    [SerializeField] private int _mineCount = 3;
+    [SerializeField] private float jumpForce = 2;
 
     private int _hp;
+    [SerializeField] private Animator _animator;
+
+   
+
 
     private void Awake()
     {
         _hp = _maxHP;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+      
     }
     private void Update()
     {
@@ -47,7 +53,17 @@ public class HeroMove : MonoBehaviour
                  
             }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _animator.SetBool("Jump", true);
+            GetComponent<Rigidbody>().AddForce(Vector3.forward * jumpForce);
 
+        }
+        else _animator.SetBool("Jump", false);
+
+        if (_dir != Vector3.zero)
+            _animator.SetBool("Running", true);
+        else _animator.SetBool("Running", false);
         PlayerMove();
 
         if (gameObject.transform.position.y < -10) { Death(); }
@@ -55,6 +71,7 @@ public class HeroMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+       
         var speed = _dir * _speed * Time.fixedDeltaTime;
         transform.Translate(speed);
     }
