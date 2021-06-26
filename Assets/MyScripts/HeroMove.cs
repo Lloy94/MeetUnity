@@ -139,6 +139,8 @@ public class HeroMove : MonoBehaviour
 
     public void Win()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("WinMenu");
     }
 
