@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private Boss _boss;
 
+
     private NavMeshAgent _agent;
     private int _hp;
 
@@ -19,8 +22,8 @@ public class Enemy : MonoBehaviour
 
     private int m_CurrentWaypointIndex;
     private void Awake()
-    {
-        _hp = _maxHP;
+    {        
+        _hp = _maxHP;      
         _agent = GetComponent<NavMeshAgent>();
         _agent.SetDestination(_targets[0].position);
         _animator.SetBool("Walk", true);
@@ -54,7 +57,7 @@ public class Enemy : MonoBehaviour
         {
             _death = true;
             _boss.DeathAnimation();
-            Destroy(gameObject, 4);
+            Destroy(gameObject, 4);          
         }
         else Destroy(gameObject);
     }

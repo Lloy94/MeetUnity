@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HeroMove : MonoBehaviour
 {
@@ -16,34 +17,57 @@ public class HeroMove : MonoBehaviour
     [SerializeField] private int _maxHP = 200;
     [SerializeField] private int _mineCount = 3;
     [SerializeField] private float jumpForce = 2;
+    [SerializeField] private Text _hpValue;
+    [SerializeField] private Text _mineValue;
 
     private int _hp;
     [SerializeField] private Animator _animator;
+
+    [SerializeField] private Canvas _pauseMenu;
 
    
 
 
     private void Awake()
     {
+        _pauseMenu.enabled = false;
         _hp = _maxHP;
+        _hpValue.text = $"Hp: {_hp}";
+        _mineValue.text = $"Мины: {_mineCount}";
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
       
     }
     private void Update()
     {
+        _hpValue.text = $"Hp: {_hp}";
+        _mineValue.text = $"Мины: {_mineCount}";
         _dir.x = Input.GetAxis("Horizontal");
         _dir.z = Input.GetAxis("Vertical");
 
        
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0)&&Time.timeScale==1)
             {
                 Fire();
           
             }
 
+            if(Input.GetKeyDown(KeyCode.Escape))
+            { if(_pauseMenu.enabled == false)
+            {
+                Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                _pauseMenu.enabled = true;
+            }
+            else {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1;
+                _pauseMenu.enabled = false; }
 
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+             }
+            if (Input.GetKeyDown(KeyCode.Mouse1)&&Time.timeScale==1)
             {
                 if (_mineCount > 0)
                 {
@@ -111,6 +135,11 @@ public class HeroMove : MonoBehaviour
         {
             Death();
         }
+    }
+
+    public void Win()
+    {
+        SceneManager.LoadScene("WinMenu");
     }
 
     public void AdHP(int hp) 
