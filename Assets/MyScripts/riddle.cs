@@ -2,18 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class riddle : MonoBehaviour
+public class Riddle : MonoBehaviour
 {
     [SerializeField] private Gate _gate;
-
-    private void OnTriggerStay(Collider other)
+    private bool playernear = false;
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                _gate.Open();
-            }
+            playernear = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playernear = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (playernear == true && Input.GetKeyDown(KeyCode.E))
+        {
+            _gate.Open();
         }
     }
 

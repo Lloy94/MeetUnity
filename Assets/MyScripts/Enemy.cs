@@ -34,12 +34,8 @@ public class Enemy : MonoBehaviour
         if (_agent.remainingDistance < _agent.stoppingDistance&&_agent.isStopped==false)
         {
             m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % _targets.Length;
-            _agent.SetDestination(_targets[m_CurrentWaypointIndex].position);
-            
-        }
-
-            
-    
+            _agent.SetDestination(_targets[m_CurrentWaypointIndex].position);           
+        }              
     }
 
     public void TakeDamage(int damage) 
@@ -72,8 +68,6 @@ public class Enemy : MonoBehaviour
             b.Init();
             _animator.SetBool("Walk", false);
         }
-
-
     }
 
     public void ReturnPatrol()
