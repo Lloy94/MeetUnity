@@ -39,9 +39,7 @@ public class HeroMove : MonoBehaviour
       
     }
     private void Update()
-    {
-        _hpValue.text = $"Hp: {_hp}";
-        _mineValue.text = $"Мины: {_mineCount}";
+    {              
         _dir.x = Input.GetAxis("Horizontal");
         _dir.z = Input.GetAxis("Vertical");
 
@@ -53,28 +51,29 @@ public class HeroMove : MonoBehaviour
             }
 
             if(Input.GetKeyDown(KeyCode.Escape))
-            { if(_pauseMenu.enabled == false)
             {
-                Time.timeScale = 0;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                _pauseMenu.enabled = true;
-            }
-            else {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                Time.timeScale = 1;
-                _pauseMenu.enabled = false; }
+                if(_pauseMenu.enabled == false)
+                    {
+                    Time.timeScale = 0;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    _pauseMenu.enabled = true;
+                    }
+                else 
+                    {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    Time.timeScale = 1;
+                    _pauseMenu.enabled = false; 
+                    }
 
-             }
+            }
             if (Input.GetKeyDown(KeyCode.Mouse1)&&Time.timeScale==1)
             {
                 if (_mineCount > 0)
                 {
-                     PlaceMine();
-                _mineCount--;
-            }
-                 
+                     PlaceMine();              
+                }                
             }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -94,32 +93,26 @@ public class HeroMove : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-       
+    {      
         var speed = _dir * _speed * Time.fixedDeltaTime;
         transform.Translate(speed);
     }
 
     private void Fire()
-    {
-        
-       
+    {      
             var bullet = Instantiate(_bulletPref, _bulletStartPosition.position, transform.rotation);
             var b = bullet.GetComponent<Bullet>();
-            b.Init();
-        
-
-
+            b.Init();      
     }
 
     private void PlaceMine()
     {
-        
+        if (_mineCount > 0)
+            _mineCount--;
+        _mineValue.text = $"Мины: {_mineCount}";
         var mine = Instantiate(_minePref, _mineStartPosition.position, Quaternion.identity);
             var m = mine.GetComponent<Mine>();
-            m.Init();
-         
-
+            m.Init();        
     }
 
     private void PlayerMove()
@@ -131,6 +124,7 @@ public class HeroMove : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _hp -= damage;
+        _hpValue.text = $"Hp: {_hp}";
         if (_hp <= 0)
         {
             Death();
@@ -149,11 +143,13 @@ public class HeroMove : MonoBehaviour
         _hp += hp;
         if (_hp > _maxHP)
             _hp = _maxHP;
+        _hpValue.text = $"Hp: {_hp}";
     }
 
     public void AdMine()
     {
         _mineCount++;
+        _mineValue.text = $"Мины: {_mineCount}";
     }
     private void Death()
     {
